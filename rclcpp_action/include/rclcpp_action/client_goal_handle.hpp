@@ -49,8 +49,8 @@ private:
 
   ClientGoalHandle(rcl_action_client_t * rcl_client, const rcl_action_goal_info_t rcl_info);
 
-  void status_callback(const action_msgs::msg::GoalStatus::SharedPtr status);
-  rclcpp::Subscription<action_msgs::msg::GoalStatus>::SharedPtr status_sub_;
+  void status_callback(const rcl_action_goal_status_t status);
+  rclcpp::Subscription<rcl_action_goal_status_t>::SharedPtr status_sub_;
 
   // TODO(sloretz) shared pointer to keep rcl_client_ alive while goal handles are alive
   rcl_action_client_t * rcl_client_;
