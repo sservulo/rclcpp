@@ -20,6 +20,8 @@
 #include <functional>
 #include <memory>
 
+#include "action_msgs/msg/goal_status.h"
+#include "rclcpp/rclcpp.hpp"
 #include "rclcpp_action/visibility_control.hpp"
 
 namespace rclcpp_action
@@ -46,6 +48,9 @@ private:
   friend Client<ACTION>;
 
   ClientGoalHandle(rcl_action_client_t * rcl_client, const rcl_action_goal_info_t rcl_info);
+
+  void status_callback(const action_msgs::msg::GoalStatus::SharedPtr status);
+  rclcpp::Subscription<action_msgs::msg::GoalStatus>::SharedPtr status_sub_;
 
   // TODO(sloretz) shared pointer to keep rcl_client_ alive while goal handles are alive
   rcl_action_client_t * rcl_client_;

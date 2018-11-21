@@ -26,6 +26,9 @@ ClientGoalHandle<ACTION>::ClientGoalHandle(
 )
 : rcl_client_(rcl_client), rcl_info_(rcl_info)
 {
+  rclcpp::Node n;
+  status_sub_ = this->create_subscription<action_msgs::msg::GoalStatus>(
+      "topic", std::bind(&ClientGoalHandle::topic_callback, this, std::placeholders::_1));
 }
 
 template<typename ACTION>
@@ -46,6 +49,9 @@ ClientGoalHandle<ACTION>::async_result()
 {
   throw std::runtime_error("Failed to get result future");
 }
+
+template<typename ACTION>
+void status_callback<ACTION>(const action_msgs::msg::GoalStatus::SharedPtr status) {}
 }  // namespace rclcpp_action
 
 #endif  // RCLCPP_ACTION__CLIENT_GOAL_HANDLE_IMPL_HPP_
